@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="记一个很离谱的业务处理：Multipart&#x2F;Form-Data当Response？2024.06.10项目背景Context这个项目要做一个智能电子衣柜，识别用户拍照扫描的衣服用yolo识别分割并打标签后加到衣柜里面，后端再每天一个定时任务在闲暇时间用OutfitAnyone给用户生成几个试穿图推荐不同的搭配踩坑背景小组分工的项目，图像识别和分割的接口由另一位组员用Python完成，提供">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一个很离谱的业务处理：Multipart&#x2F;Form-Data当Response？">
+<meta property="og:url" content="https://lighthouseac.github.io/2024/06/10/%E8%AE%B0%E4%B8%80%E4%B8%AA%E5%BE%88%E7%A6%BB%E8%B0%B1%E7%9A%84%E4%B8%9A%E5%8A%A1%E5%A4%84%E7%90%86%EF%BC%9AMultipartFormData%E5%BD%93Response%EF%BC%9F/index.html">
+<meta property="og:site_name" content="AuS&#39;s Blog">
+<meta property="og:description" content="记一个很离谱的业务处理：Multipart&#x2F;Form-Data当Response？2024.06.10项目背景Context这个项目要做一个智能电子衣柜，识别用户拍照扫描的衣服用yolo识别分割并打标签后加到衣柜里面，后端再每天一个定时任务在闲暇时间用OutfitAnyone给用户生成几个试穿图推荐不同的搭配踩坑背景小组分工的项目，图像识别和分割的接口由另一位组员用Python完成，提供">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-06-10T12:55:42.000Z">
+<meta property="article:modified_time" content="2024-06-10T13:37:09.340Z">
+<meta property="article:author" content="LightHouse AC">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Java,后端,SpringBoot,RestTemplate,ApacheCommonFileUpload">
+
+
+<title >记一个很离谱的业务处理：Multipart/Form-Data当Response？</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.3' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.3' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"lighthouseac.github.io","author":"LightHouse AC","root":"/","typed_text":["OIer/ACMer"],"theme_version":"2.1.3","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","showText":"醒来了！","hideText":"睡着啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-06-10 21:37:09"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.3" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            LightHouse<span>AC</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            记一个很离谱的业务处理：Multipart/Form-Data当Response？
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.png">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        LightHouseAC
+    </h5>
+    
+        <div class="trm-label">
+            An
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/lighthouseac" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="mailto:recwwk@gmail.com" title="email" rel="nofollow" target="_blank">
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    
+        <a href="https://www.luogu.com.cn/user/130611" title="luogu" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-code"></i>
+        </a>
+    
+        <a href="https://codeforces.com/profile/EagleK" title="codeforces" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-poll"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                坐标:
+            </div>
+            <div class="trm-label trm-label-light">
+                广州
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年龄:
+            </div>
+            <div class="trm-label trm-label-light">
+                20
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:recwwk@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            06/10
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            20:55
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            LightHouse AC
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="记一个很离谱的业务处理：Multipart-Form-Data当Response？"><a href="#记一个很离谱的业务处理：Multipart-Form-Data当Response？" class="headerlink" title="记一个很离谱的业务处理：Multipart&#x2F;Form-Data当Response？"></a>记一个很离谱的业务处理：Multipart&#x2F;Form-Data当Response？</h1><h4 id="2024-06-10"><a href="#2024-06-10" class="headerlink" title="2024.06.10"></a>2024.06.10</h4><h4 id="项目背景Context"><a href="#项目背景Context" class="headerlink" title="项目背景Context"></a>项目背景Context</h4><h5 id="这个项目要做一个智能电子衣柜，识别用户拍照扫描的衣服用yolo识别分割并打标签后加到衣柜里面，后端再每天一个定时任务在闲暇时间用OutfitAnyone给用户生成几个试穿图推荐不同的搭配"><a href="#这个项目要做一个智能电子衣柜，识别用户拍照扫描的衣服用yolo识别分割并打标签后加到衣柜里面，后端再每天一个定时任务在闲暇时间用OutfitAnyone给用户生成几个试穿图推荐不同的搭配" class="headerlink" title="这个项目要做一个智能电子衣柜，识别用户拍照扫描的衣服用yolo识别分割并打标签后加到衣柜里面，后端再每天一个定时任务在闲暇时间用OutfitAnyone给用户生成几个试穿图推荐不同的搭配"></a>这个项目要做一个智能电子衣柜，识别用户拍照扫描的衣服用yolo识别分割并打标签后加到衣柜里面，后端再每天一个定时任务在闲暇时间用OutfitAnyone给用户生成几个试穿图推荐不同的搭配</h5><h4 id="踩坑背景"><a href="#踩坑背景" class="headerlink" title="踩坑背景"></a>踩坑背景</h4><h5 id="小组分工的项目，图像识别和分割的接口由另一位组员用Python完成，提供了一个-8081-segment的接口，传入一个图片，返回一个Multipart-Form-Data格式的Content"><a href="#小组分工的项目，图像识别和分割的接口由另一位组员用Python完成，提供了一个-8081-segment的接口，传入一个图片，返回一个Multipart-Form-Data格式的Content" class="headerlink" title="小组分工的项目，图像识别和分割的接口由另一位组员用Python完成，提供了一个*:8081&#x2F;segment的接口，传入一个图片，返回一个Multipart&#x2F;Form-Data格式的Content"></a>小组分工的项目，图像识别和分割的接口由另一位组员用Python完成，提供了一个*:8081&#x2F;segment的接口，传入一个图片，返回一个Multipart&#x2F;Form-Data格式的Content</h5><h5 id="项目需要，这个接口要跟我写的Java后端对接，而且时间比较紧急，来不及改他的后端了"><a href="#项目需要，这个接口要跟我写的Java后端对接，而且时间比较紧急，来不及改他的后端了" class="headerlink" title="项目需要，这个接口要跟我写的Java后端对接，而且时间比较紧急，来不及改他的后端了"></a>项目需要，这个接口要跟我写的Java后端对接，而且时间比较紧急，来不及改他的后端了</h5><h5 id="经常遇到Multipart-Form-Data格式作为Request的，但是这作为Response真是第一次遇见。网络上的处理方式很少很少，少数几个也是好几年前的处理方法了，并不适用"><a href="#经常遇到Multipart-Form-Data格式作为Request的，但是这作为Response真是第一次遇见。网络上的处理方式很少很少，少数几个也是好几年前的处理方法了，并不适用" class="headerlink" title="经常遇到Multipart&#x2F;Form-Data格式作为Request的，但是这作为Response真是第一次遇见。网络上的处理方式很少很少，少数几个也是好几年前的处理方法了，并不适用"></a>经常遇到Multipart&#x2F;Form-Data格式作为Request的，但是这作为Response真是第一次遇见。网络上的处理方式很少很少，少数几个也是好几年前的处理方法了，并不适用</h5><h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="一开始想到，如果作为响应不好处理，把它当成请求不就可以轻松拿出来数据了吗。于是查找有没有把Response转换成Request的方法，然后还真让我找着了一个：Apache-Common-FileUpload2-的JakartaServletDiskFileUpload有一个把parseRequest方法。"><a href="#一开始想到，如果作为响应不好处理，把它当成请求不就可以轻松拿出来数据了吗。于是查找有没有把Response转换成Request的方法，然后还真让我找着了一个：Apache-Common-FileUpload2-的JakartaServletDiskFileUpload有一个把parseRequest方法。" class="headerlink" title="一开始想到，如果作为响应不好处理，把它当成请求不就可以轻松拿出来数据了吗。于是查找有没有把Response转换成Request的方法，然后还真让我找着了一个：Apache Common FileUpload2 的JakartaServletDiskFileUpload有一个把parseRequest方法。"></a>一开始想到，如果作为响应不好处理，把它当成请求不就可以轻松拿出来数据了吗。于是查找有没有把Response转换成Request的方法，然后还真让我找着了一个：Apache Common FileUpload2 的JakartaServletDiskFileUpload有一个把parseRequest方法。</h5><h5 id="理论存在，就开始实现了，首先是用RestTemplate向目标接口发送post请求，由于接口需要的格式是Multipart-Form-Data，就构建了一个MultiValueMap来构造HttpEntity向目标发送请求"><a href="#理论存在，就开始实现了，首先是用RestTemplate向目标接口发送post请求，由于接口需要的格式是Multipart-Form-Data，就构建了一个MultiValueMap来构造HttpEntity向目标发送请求" class="headerlink" title="理论存在，就开始实现了，首先是用RestTemplate向目标接口发送post请求，由于接口需要的格式是Multipart&#x2F;Form-Data，就构建了一个MultiValueMap来构造HttpEntity向目标发送请求"></a>理论存在，就开始实现了，首先是用RestTemplate向目标接口发送post请求，由于接口需要的格式是Multipart&#x2F;Form-Data，就构建了一个MultiValueMap来构造HttpEntity向目标发送请求</h5><h5 id="发请求的主要逻辑："><a href="#发请求的主要逻辑：" class="headerlink" title="发请求的主要逻辑："></a>发请求的主要逻辑：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;http://localhost:8081/segment&quot;</span>;</span><br><span class="line"><span class="type">HttpHeaders</span> <span class="variable">headers</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpHeaders</span>();</span><br><span class="line">headers.setContentType(MediaType.MUILTIPART_FORM_DATA);</span><br><span class="line"></span><br><span class="line">MultiValueMap&lt;String, Object&gt; map = <span class="keyword">new</span> <span class="title class_">LinkedMultiValueMap</span>&lt;&gt;();</span><br><span class="line"><span class="comment">// 这里的multipartFile是Java后端请求里接收到的，需要@RequestPart(&quot;file&quot;)</span></span><br><span class="line">map.set(<span class="string">&quot;image&quot;</span>, multipartFile.getResource()); </span><br><span class="line">HttpEntity&lt;Object&gt; entity = <span class="keyword">new</span> <span class="title class_">HttpEntity</span>&lt;&gt;(map, headers);</span><br><span class="line"><span class="comment">// 获取一个ResponseEntity来构建一个JakartaServletDiskFileUpload实例</span></span><br><span class="line">ResponseEntity&lt;Resource&gt; responseEntity = restTemplate.postForEntity(url, entity, Resource.class); </span><br></pre></td></tr></table></figure>
+
+<h5 id="接下来的顺序就是从Apache-Common-FileUpload2-的RequestContext-DiskItemFileFactory-JakartaServletDiskFileUpload，然后用parseRequest获取Multipart-Form-Data里面的所有FileItem"><a href="#接下来的顺序就是从Apache-Common-FileUpload2-的RequestContext-DiskItemFileFactory-JakartaServletDiskFileUpload，然后用parseRequest获取Multipart-Form-Data里面的所有FileItem" class="headerlink" title="接下来的顺序就是从Apache Common FileUpload2 的RequestContext -&gt; DiskItemFileFactory -&gt; JakartaServletDiskFileUpload，然后用parseRequest获取Multipart&#x2F;Form-Data里面的所有FileItem"></a>接下来的顺序就是从Apache Common FileUpload2 的RequestContext -&gt; DiskItemFileFactory -&gt; JakartaServletDiskFileUpload，然后用parseRequest获取Multipart&#x2F;Form-Data里面的所有FileItem</h5><h5 id="RequestContext需要自己实现一个类，主要就是用来实现Res-Req的转换的，这里我实现了一个SimpleRequestContext"><a href="#RequestContext需要自己实现一个类，主要就是用来实现Res-Req的转换的，这里我实现了一个SimpleRequestContext" class="headerlink" title="RequestContext需要自己实现一个类，主要就是用来实现Res-&gt;Req的转换的，这里我实现了一个SimpleRequestContext"></a>RequestContext需要自己实现一个类，主要就是用来实现Res-&gt;Req的转换的，这里我实现了一个SimpleRequestContext</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SimpleRequestContext</span> <span class="keyword">implements</span> <span class="title class_">RequestContext</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Charset charset;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MediaType contentType;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> InputStream content;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SimpleRequestContext</span><span class="params">(Charset charset, MediaType contentType, InputStream content)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.charset = charset;</span><br><span class="line">        <span class="built_in">this</span>.contentType = contentType;</span><br><span class="line">        <span class="built_in">this</span>.content = content;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getCharacterEncoding</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.charset.displayName();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getContentType</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.contentType.toString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getContentLength</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.content.available();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ignored) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> InputStream <span class="title function_">getInputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.content;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="接下来就是获取数据的过程了"><a href="#接下来就是获取数据的过程了" class="headerlink" title="接下来就是获取数据的过程了"></a>接下来就是获取数据的过程了</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RequestContext</span> <span class="variable">requestContext</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleRequestContext</span>(StandardCharsets.UTF_8, responseEntity.getHeaders().getContentType(),</span><br><span class="line">                responseEntity.getBody().getInputStream());</span><br><span class="line"><span class="type">DiskFileItemFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DiskFileItemFactory</span>.Builder().get();</span><br><span class="line"><span class="type">JakartaServletDiskFileUpload</span> <span class="variable">upload</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JakartaServletDiskFileUpload</span>(factory);</span><br><span class="line">List&lt;DiskFileItem&gt; fileItems = upload.parseRequest(requestContext);</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(); <span class="comment">// 这个List是我用来存返回的识别信息和所有图片的URL的，可以按需处理自己需要的数据，封装一个DTO</span></span><br><span class="line"><span class="type">String</span> <span class="variable">uuid</span> <span class="operator">=</span> RandomStringUtils.randomAlphanumeric(<span class="number">8</span>); <span class="comment">// 属于同一个分割结果的图片用一个统一前缀标记</span></span><br><span class="line"><span class="keyword">for</span>(DiskFileItem fileItem : fileItems)&#123;</span><br><span class="line">    <span class="type">byte</span>[] data = fileItem.get(); <span class="comment">// Multipart/Form-Data里面一个boundary的字节数据</span></span><br><span class="line">    <span class="keyword">if</span> (fileItem.getContentType().equals(<span class="string">&quot;application/json&quot;</span>))&#123; <span class="comment">// segment接口唯一一个application/json格式的数据，是图像的识别信息</span></span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">String</span>(data, StandardCharsets.UTF_8));</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">fileName</span> <span class="operator">=</span> fileItem.getFieldName(); <span class="comment">// 文件名是这个字段的名字</span></span><br><span class="line">        <span class="type">FileUploadBizEnum</span> <span class="variable">fileUploadBizEnum</span> <span class="operator">=</span> FileUploadBizEnum.getEnumByValue(<span class="string">&quot;clothes_img_split&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">filename</span> <span class="operator">=</span> uuid + <span class="string">&#x27;-&#x27;</span> + fileName;</span><br><span class="line">        <span class="type">String</span> <span class="variable">filepath</span> <span class="operator">=</span> String.format(<span class="string">&quot;/%s/%s/%s/%s&quot;</span>, fileUploadBizEnum.getValue(), uid, LocalDate.now(), filename);</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            file = File.createTempFile(filepath, <span class="literal">null</span>);</span><br><span class="line">            <span class="type">OutputStream</span> <span class="variable">os</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file);</span><br><span class="line">            os.write(data); <span class="comment">// 把这个fileItem的文件数据写进临时文件</span></span><br><span class="line">            os.close();</span><br><span class="line">            cosManager.putObject(filepath, file); <span class="comment">// 文件存到COS上</span></span><br><span class="line">            result.add(filepath); <span class="comment">// 返回的路径存进result列表</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            log.error(<span class="string">&quot;file upload error, filepath = &quot;</span> + filepath, e);</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(ErrorCode.INTERNAL_ERROR, <span class="string">&quot;Upload file failed&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file != <span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="type">boolean</span> <span class="variable">isDeleted</span> <span class="operator">=</span> file.delete(); <span class="comment">// 删除临时文件</span></span><br><span class="line">                <span class="keyword">if</span> (!isDeleted)&#123;</span><br><span class="line">                    log.error(<span class="string">&quot;file delete error, filepath = &#123;&#125;&quot;</span>,filepath);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="到这里这个业务就算处理完成了，虽然有点复杂，但是学到了挺多东西，以后遇到类似的情景就可以复用这个解决方案了"><a href="#到这里这个业务就算处理完成了，虽然有点复杂，但是学到了挺多东西，以后遇到类似的情景就可以复用这个解决方案了" class="headerlink" title="到这里这个业务就算处理完成了，虽然有点复杂，但是学到了挺多东西，以后遇到类似的情景就可以复用这个解决方案了"></a>到这里这个业务就算处理完成了，虽然有点复杂，但是学到了挺多东西，以后遇到类似的情景就可以复用这个解决方案了</h5>
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2023/10/10/Introduction/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E7%AE%80%E4%BB%8B/">
+                    简介
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/10/10/Introduction/" class="trm-anima-link">
+                    关于我-Introduction
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/10/10</li>
+                <li>14:19</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.1.3
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+            
+<div class="trm-fixed-container">
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.1.3"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.3"></script>
+
+</body>
+
+</html>
