@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="基础知识学习笔记一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）七大原则：    设计原则 定义    开闭原则 对扩展开放，对修改关闭   单一职责原则 一个类只负责一个相应职责   里氏替换原则 所有引用基类的地方必须能透明地使用其子类的对象   依赖倒置原则 依赖于抽象，不能依赖于具体实现   接口隔离原则 类之间的依赖关系建立在最小的接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试基础知识学习笔记">
+<meta property="og:url" content="https://lighthouseac.github.io/2024/06/30/%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="AuS&#39;s Blog">
+<meta property="og:description" content="基础知识学习笔记一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）七大原则：    设计原则 定义    开闭原则 对扩展开放，对修改关闭   单一职责原则 一个类只负责一个相应职责   里氏替换原则 所有引用基类的地方必须能透明地使用其子类的对象   依赖倒置原则 依赖于抽象，不能依赖于具体实现   接口隔离原则 类之间的依赖关系建立在最小的接口">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-06-30T13:17:14.000Z">
+<meta property="article:modified_time" content="2024-06-30T13:18:37.957Z">
+<meta property="article:author" content="LightHouse AC">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="基础知识,计算机网络,Java,设计模式,八股,操作系统,数据库,MySQL,Redis">
+
+
+<title >面试基础知识学习笔记</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.1.3' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.1.3' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"lighthouseac.github.io","author":"LightHouse AC","root":"/","typed_text":["OIer/ACMer"],"theme_version":"2.1.3","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","showText":"醒来了！","hideText":"睡着啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-06-30 21:18:37"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.3" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            LightHouse<span>AC</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            面试基础知识学习笔记
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.png">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        LightHouseAC
+    </h5>
+    
+        <div class="trm-label">
+            An
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/lighthouseac" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="mailto:recwwk@gmail.com" title="email" rel="nofollow" target="_blank">
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    
+        <a href="https://www.cnblogs.com/light-house/" title="cnblog" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-blog"></i>
+        </a>
+    
+        <a href="https://www.luogu.com.cn/user/130611" title="luogu" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-code"></i>
+        </a>
+    
+        <a href="https://codeforces.com/profile/EagleK" title="codeforces" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-poll"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                坐标:
+            </div>
+            <div class="trm-label trm-label-light">
+                广州
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年龄:
+            </div>
+            <div class="trm-label trm-label-light">
+                20
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:recwwk@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            06/30
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            21:17
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            LightHouse AC
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="基础知识学习笔记"><a href="#基础知识学习笔记" class="headerlink" title="基础知识学习笔记"></a>基础知识学习笔记</h1><h2 id="一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）"><a href="#一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）" class="headerlink" title="一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）"></a>一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）</h2><p>七大原则：</p>
+<table>
+<thead>
+<tr>
+<th>设计原则</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开闭原则</td>
+<td>对扩展开放，对修改关闭</td>
+</tr>
+<tr>
+<td>单一职责原则</td>
+<td>一个类只负责一个相应职责</td>
+</tr>
+<tr>
+<td>里氏替换原则</td>
+<td>所有引用基类的地方必须能透明地使用其子类的对象</td>
+</tr>
+<tr>
+<td>依赖倒置原则</td>
+<td>依赖于抽象，不能依赖于具体实现</td>
+</tr>
+<tr>
+<td>接口隔离原则</td>
+<td>类之间的依赖关系建立在最小的接口上</td>
+</tr>
+<tr>
+<td>合成&#x2F;聚合复用原则</td>
+<td>尽量使用合成&#x2F;聚合，而不是通过继承来复用</td>
+</tr>
+<tr>
+<td>迪米特法则</td>
+<td>一个软件实体应尽可能少地与其他实体发生相互作用</td>
+</tr>
+</tbody></table>
+<p>设计模式的分类：</p>
+<ul>
+<li><strong>创建型</strong>：创建对象的同时隐藏逻辑，不使用new直接实例化对象（Major：工厂&#x2F;抽象工厂&#x2F;单例&#x2F;建造者模式）<strong>！！！重点！！！</strong></li>
+<li>结构型：通过类和接口见的继承和引用实现创建复杂结构的对象（Major：适配器&#x2F;代理模式）</li>
+<li>行为型：通过类之间不同通信方式实现不同行为（Major：观察者模式）</li>
+</ul>
+<h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><ul>
+<li>简单工厂模式：由一个工厂对象来创建实例，客户不需要关心创建逻辑，只需要传入工厂的参数</li>
+</ul>
+<p>​	Spring中：BeanFactory使用简单工厂模式，根据传入一个唯一标识获得Bean对象</p>
+<ul>
+<li><p>工厂方法模式：简单工厂模式中工厂负责生产所有产品，而工厂方法模式将生产具体产品的任务分发给具体的产品工厂</p>
+<p>定义一个抽象工厂，定义产品的生产接口，不负责具体的产品。不需要通过指定类型来创建对象，生产任务会分发出去</p>
+</li>
+<li><p>抽象工厂模式：抽象工厂模式在抽象工厂中增加 创建产品 的接口，在具体的子工厂中实现新加产品的创建</p>
+</li>
+</ul>
+<h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>一个单例类在任何情况下都只存在一个实例，构造方法是**(1)私有<strong>的，由自己创建一个</strong>(2)静态变量<strong>存储实例，对外提供一个</strong>(3)静态公有方法**获取实例。</p>
+<p>优点就是内存里面只存一个实例，减少内存开销。针对大型、复杂或者频繁创建和销毁的实例，使用单例模式可以大大减少内存开销。</p>
+<p>缺点就是没有抽象层，难以扩展。</p>
+<ul>
+<li><p>单例模式常见实现方法</p>
+<ol>
+<li><p>饿汉式 - 线程安全</p>
+<ul>
+<li>类一加载就创建对象，比较常用但是容易产生垃圾对象，不是懒加载</li>
+</ul>
+<blockquote>
+<p>懒加载Lazy Loading：使用的时候再创建对象</p>
+</blockquote>
+<ul>
+<li>怎么保证线程安全？基于类加载机制避免了多线程的同步问题</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125; <span class="comment">// (1) 私有构造方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">Singleton</span> <span class="variable">instance</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton</span>(); <span class="comment">// (2) 静态变量存储实例</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123; <span class="comment">// (3) 静态公有方法获取实例</span></span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过反射是可以获取私有对象的，因此通过反射就可以获得这个构造器访问权，因此反射可以破坏单例模式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ReflectionDestroyTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">//	获取构造方法</span></span><br><span class="line">        Constructor&lt;Singleton&gt; declaredConstructor = Singleton.class.getDeclaredConstructor(<span class="literal">null</span>);</span><br><span class="line">        <span class="comment">// 强制访问</span></span><br><span class="line">        declaredConstructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        <span class="comment">// 反射获取构造方法创建的实例</span></span><br><span class="line">        <span class="type">Singleton</span> <span class="variable">reflectSingleton</span> <span class="operator">=</span> declaredConstructor.newInstance();</span><br><span class="line">        <span class="comment">// 正常创建的实例</span></span><br><span class="line">        <span class="type">Singleton</span> <span class="variable">singleton</span> <span class="operator">=</span> Singleton.getInstance();</span><br><span class="line">        sout(reflectSingleton == singleton);	<span class="comment">//	false，单例模式的类Singleton不止一个实例了，被破坏了</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>饿汉式实现的单例模式可以防止被反射破坏</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*	在Singleton类的构造方法中：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance != <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;单例模式禁止使用反射创建实例&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h3 id="懒汉式-实现的单例模式无法防止被反射破坏"><a href="#懒汉式-实现的单例模式无法防止被反射破坏" class="headerlink" title="懒汉式 实现的单例模式无法防止被反射破坏"></a>懒汉式 实现的单例模式无法防止被反射破坏</h3></blockquote>
+</li>
+<li><p>懒汉式 - 线程不安全<br>单线程下可以这样实现，但是多线程无法保证单例（需要加锁，见方法3）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span>()&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;	<span class="comment">//	(1)私有化构造方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;	<span class="comment">//	(2)定义一个静态变量指向自己类型，先不创建，后面用来存储实例</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;	<span class="comment">//	(3)对外提供一个公共方法获取实例</span></span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">null</span>)&#123;</span><br><span class="line">            instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样的实现显然是线程不安全的，new出来的Thread随便创建不同的实例，破坏单例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">5</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">                sout(Singleton.getInstance());	<span class="comment">//	这里就会创建出不同的实例了</span></span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用前面的方法来防止反射破坏也是做不到的，只需要</p>
+<ol>
+<li>先用反射创建对象，这时候instance !&#x3D; null判断是无效的，创建了一个不一样的实例</li>
+<li>再正常创建单例，又是不一样的实例</li>
+</ol>
+</li>
+<li><p>懒汉式 - 线程安全（加锁）</p>
+<p>虽然<strong>懒汉式防止不了反射破坏单例</strong>，但是可以防止多线程破坏，就是通过加锁的方式</p>
+<p>但是 每次调用<code>getInstance</code> 获取实例对象都要加锁和释放锁，消耗性能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">null</span>)&#123;</span><br><span class="line">            instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>双重检查锁（双检锁DCL）- 需要volatile关键字</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton instance;	<span class="comment">//	这里用volatile关键字很重要！！！</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">null</span>)&#123;	<span class="comment">// 第一层检查锁</span></span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class)&#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="literal">null</span>)&#123;	<span class="comment">//	第二层检查锁</span></span><br><span class="line">                    instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>实现原理：</p>
+<ol>
+<li><p>正常判断，非空说明已经有实例，返回即可，没有才需要判断</p>
+</li>
+<li><p>多个线程进行锁竞争，第一个拿到锁的发现没有实例，创建后释放锁，其他线程再进来就发现已经有实例了，返回单例</p>
+</li>
+<li><p>这里需要用volatile关键字是因为 <code>new</code> 关键字不是原子操作，编译器可能会把指令重排序</p>
+<p>new一个对象的步骤是</p>
+<ol>
+<li>堆内存开辟内存空间</li>
+<li>调用构造方法，初始化对象</li>
+<li>引用变量指向堆内存空间</li>
+</ol>
+<p>要防止重排序导致的初始化后导致应该123顺序执行的变成了132执行，导致使用了没有初始化的，非空的实例（判断instance &#x3D;&#x3D; null的时候没有初始化）</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>静态内部类 （最简单的安全实现方式）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> InnerClass.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Class InnerClass&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">Singleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>静态内部类不属于 5种 类的<strong>主动引用</strong>，属于被动引用</p>
+<p>当getInstance方法被调用时，InnerClass才会在Singleton的运行时常量池里面，这时候<code>INSTANCE</code>才被真正创建并返回出去</p>
+<p>至于保证线程安全则是 JVM 保证了类的class init：<code>&lt;clinit&gt;()</code>方法在多线程时被正确加锁和同步</p>
+</li>
+<li><p>枚举单例    通过枚举实现单例</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><blockquote>
+<p>代理模式的本质是一个中间件，主要目的是解耦服务提供者和使用者（好像中间件干这活的挺多的）</p>
+</blockquote>
+<p>3个概念：</p>
+<ol>
+<li>RealSubject：真正的目标对象</li>
+<li>Subject：定义了RealSubject对外的接口，这些接口必须被Proxy实现，这样调用Proxy的接口最终都转化成调用RealSubject</li>
+<li>Proxy：目标对象的代理，控制和管理目标对象，并且间接地传递外部对目标对象的访问<ol>
+<li>Remote Proxy远程代理：对本地的请求以及参数序列化，向远程对象发送请求，将响应结果反序列化后返回给调用者</li>
+<li>Virtual Proxy虚拟代理：目标对象的创建开销比较大的时候，用延迟或者异步的方式创建目标对象</li>
+<li>Protection Proxy保护代理：细化对目标对象访问权限的控制</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>静态代理和动态代理的区别<ul>
+<li>动态代理更灵活，不需要必须实现接口，可以直接代理实现类，不用对每个目标类都创建代理类</li>
+<li>静态代理在编译时就将接口、实现类、代理类都变成了class文件。动态代理在运行时动态生成字节码加载到 JVM里</li>
+</ul>
+</li>
+</ul>
+<h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><h2 id="二、Java基础"><a href="#二、Java基础" class="headerlink" title="二、Java基础"></a>二、Java基础</h2><p>JVM - Java虚拟机</p>
+<p>JDK:{</p>
+<p>​	JRE:{</p>
+<p>​		JVM,</p>
+<p>​		类库	</p>
+<p>​	},</p>
+<p>​	Java开发工具（Javac等)</p>
+<p>}</p>
+<p>字节码：.class文件，JVM可以理解的代码</p>
+<p>只面向虚拟机，通过字节码实现了<strong>可移植</strong>，性能比一般解释型语言高，由于只面向虚拟机，Java程序无需重新编译即可跨平台运行</p>
+<p>.java -&gt; javac编译 -&gt; .class -&gt; 解释器&#x2F;JIT -&gt; 机器可以理解的代码</p>
+<blockquote>
+<p>JIT编译器：Just in Time Compilation，运行时编译，用于编译热点代码（编译速度&gt;&gt;解释）。完成编译后将字节码对应的机器码保存下来。</p>
+<p>因此Java是 <strong>编译与解释</strong>共存的 语言</p>
+</blockquote>
+<p>JVM里面有一个加载类的子系统，运行时区域（方法区域，堆，栈，线程池，原生方法栈），原生方法库，原生方法接口，和执行引擎</p>
+<p>Java的基本类型和包装类型</p>
+<ol>
+<li>基本类型一般只用于定义一些常量或者局部变量。包装类型可以用于泛型，但是局部类型不可以</li>
+<li>基本类型的局部变量存在 JVM的栈中，成员变量存在 JVM的堆中，static修饰的成员变量属于类不属于对象，也存在堆里。包装类型属于对象类型，几乎所有对象实例都存在堆中</li>
+<li>基本类型占用的空间更小，基本类型有默认值非null，但是成员变量包装类型不赋值就是null</li>
+<li>基本数据类型 用 &#x3D;&#x3D; 比较的是值，包装类型 用 &#x3D;&#x3D; 比较的是对象的内存地址，包装类型比较值需要用equals()</li>
+</ol>
+<p>包装类型的缓存机制</p>
+<p>[-128,127], Character[0,127]范围内缓存了数值范围内对应的对象</p>
+<p>因此包装类型的对象，如Integer可能在IntegerCache.cache产生，复用了已有对象，范围外的对象，会在堆上产生，不会复用</p>
+<p>不仅如此，new出来的对象用 &#x3D;&#x3D; 也是判断为false的，缓存范围内数值和valueOf的才会被 &#x3D;&#x3D; 判断为true</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Integer</span> <span class="variable">i1</span> <span class="operator">=</span> Integer.valueOf(<span class="number">127</span>);</span><br><span class="line"><span class="type">Integer</span> <span class="variable">i2</span> <span class="operator">=</span> <span class="number">127</span>;</span><br><span class="line">System.out.println(i1 == i2);	<span class="comment">// true</span></span><br><span class="line"><span class="comment">/* --------------------------------- */</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">i1</span> <span class="operator">=</span> Integer.valueOf(<span class="number">128</span>);</span><br><span class="line"><span class="type">Integer</span> <span class="variable">i2</span> <span class="operator">=</span> <span class="number">128</span>;</span><br><span class="line">System.out.println(i1 == i2);	<span class="comment">// false</span></span><br><span class="line"><span class="comment">/* --------------------------------- */</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">i1</span> <span class="operator">=</span> <span class="number">127</span>;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">i2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Integer</span>(<span class="number">127</span>);</span><br><span class="line">System.out.println(i1 == i2);	<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>所以一定要用equals方法判断包装类型的数据</p>
+<h2 id="三、计算机网络"><a href="#三、计算机网络" class="headerlink" title="三、计算机网络"></a>三、计算机网络</h2><h2 id="四、操作系统"><a href="#四、操作系统" class="headerlink" title="四、操作系统"></a>四、操作系统</h2><h2 id="五、MySQL"><a href="#五、MySQL" class="headerlink" title="五、MySQL"></a>五、MySQL</h2><h2 id="六、Redis"><a href="#六、Redis" class="headerlink" title="六、Redis"></a>六、Redis</h2><h2 id="七、MQ"><a href="#七、MQ" class="headerlink" title="七、MQ"></a>七、MQ</h2>
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/06/28/SpringAOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E7%AC%94%E8%AE%B0/">
+                    笔记
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/06/28/SpringAOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="trm-anima-link">
+                    SpringAOP学习笔记
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/06/28</li>
+                <li>10:51</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.1.3
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+            
+<div class="trm-fixed-container">
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.1.3"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.3"></script>
+
+</body>
+
+</html>
