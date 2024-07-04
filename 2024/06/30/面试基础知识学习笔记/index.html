@@ -7,15 +7,15 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta name="description" content="基础知识学习笔记一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）七大原则：    设计原则 定义    开闭原则 对扩展开放，对修改关闭   单一职责原则 一个类只负责一个相应职责   里氏替换原则 所有引用基类的地方必须能透明地使用其子类的对象   依赖倒置原则 依赖于抽象，不能依赖于具体实现   接口隔离原则 类之间的依赖关系建立在最小的接口">
+<meta name="description" content="基础知识学习笔记（结合实际理解&#x2F;自用）一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）七大原则：    设计原则 定义    开闭原则 对扩展开放，对修改关闭   单一职责原则 一个类只负责一个相应职责   里氏替换原则 所有引用基类的地方必须能透明地使用其子类的对象   依赖倒置原则 依赖于抽象，不能依赖于具体实现   接口隔离原则">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试基础知识学习笔记">
 <meta property="og:url" content="https://lighthouseac.github.io/2024/06/30/%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="AuS&#39;s Blog">
-<meta property="og:description" content="基础知识学习笔记一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）七大原则：    设计原则 定义    开闭原则 对扩展开放，对修改关闭   单一职责原则 一个类只负责一个相应职责   里氏替换原则 所有引用基类的地方必须能透明地使用其子类的对象   依赖倒置原则 依赖于抽象，不能依赖于具体实现   接口隔离原则 类之间的依赖关系建立在最小的接口">
+<meta property="og:description" content="基础知识学习笔记（结合实际理解&#x2F;自用）一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）七大原则：    设计原则 定义    开闭原则 对扩展开放，对修改关闭   单一职责原则 一个类只负责一个相应职责   里氏替换原则 所有引用基类的地方必须能透明地使用其子类的对象   依赖倒置原则 依赖于抽象，不能依赖于具体实现   接口隔离原则">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-06-30T13:17:14.000Z">
-<meta property="article:modified_time" content="2024-06-30T13:18:37.957Z">
+<meta property="article:modified_time" content="2024-07-04T09:56:52.892Z">
 <meta property="article:author" content="LightHouse AC">
 <meta name="twitter:card" content="summary">
 
@@ -61,7 +61,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"lighthouseac.github.io","author":"LightHouse AC","root":"/","typed_text":["OIer/ACMer"],"theme_version":"2.1.3","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","showText":"醒来了！","hideText":"睡着啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-06-30 21:18:37"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-07-04 17:56:52"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.3" id="trm-switch-style">
@@ -366,7 +366,7 @@
 </div>
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
-    <h1 id="基础知识学习笔记"><a href="#基础知识学习笔记" class="headerlink" title="基础知识学习笔记"></a>基础知识学习笔记</h1><h2 id="一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）"><a href="#一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）" class="headerlink" title="一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）"></a>一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）</h2><p>七大原则：</p>
+    <h1 id="基础知识学习笔记（结合实际理解-自用）"><a href="#基础知识学习笔记（结合实际理解-自用）" class="headerlink" title="基础知识学习笔记（结合实际理解&#x2F;自用）"></a>基础知识学习笔记（结合实际理解&#x2F;自用）</h1><h2 id="一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）"><a href="#一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）" class="headerlink" title="一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）"></a>一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）</h2><p>七大原则：</p>
 <table>
 <thead>
 <tr>
@@ -520,7 +520,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><h2 id="二、Java基础"><a href="#二、Java基础" class="headerlink" title="二、Java基础"></a>二、Java基础</h2><p>JVM - Java虚拟机</p>
+<h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><h2 id="二、Java"><a href="#二、Java" class="headerlink" title="二、Java"></a>二、Java</h2><h4 id="1-Java基础"><a href="#1-Java基础" class="headerlink" title="1) Java基础"></a>1) Java基础</h4><p>JVM - Java虚拟机</p>
 <p>JDK:{</p>
 <p>​	JRE:{</p>
 <p>​		JVM,</p>
@@ -536,20 +536,177 @@
 <p>因此Java是 <strong>编译与解释</strong>共存的 语言</p>
 </blockquote>
 <p>JVM里面有一个加载类的子系统，运行时区域（方法区域，堆，栈，线程池，原生方法栈），原生方法库，原生方法接口，和执行引擎</p>
-<p>Java的基本类型和包装类型</p>
-<ol>
+<h5 id="Java的基本类型和包装类型"><a href="#Java的基本类型和包装类型" class="headerlink" title="Java的基本类型和包装类型"></a>Java的基本类型和包装类型</h5><ol>
 <li>基本类型一般只用于定义一些常量或者局部变量。包装类型可以用于泛型，但是局部类型不可以</li>
 <li>基本类型的局部变量存在 JVM的栈中，成员变量存在 JVM的堆中，static修饰的成员变量属于类不属于对象，也存在堆里。包装类型属于对象类型，几乎所有对象实例都存在堆中</li>
 <li>基本类型占用的空间更小，基本类型有默认值非null，但是成员变量包装类型不赋值就是null</li>
 <li>基本数据类型 用 &#x3D;&#x3D; 比较的是值，包装类型 用 &#x3D;&#x3D; 比较的是对象的内存地址，包装类型比较值需要用equals()</li>
 </ol>
-<p>包装类型的缓存机制</p>
-<p>[-128,127], Character[0,127]范围内缓存了数值范围内对应的对象</p>
+<h5 id="包装类型的缓存机制"><a href="#包装类型的缓存机制" class="headerlink" title="包装类型的缓存机制"></a>包装类型的缓存机制</h5><p>[-128,127], Character[0,127]范围内缓存了数值范围内对应的对象</p>
 <p>因此包装类型的对象，如Integer可能在IntegerCache.cache产生，复用了已有对象，范围外的对象，会在堆上产生，不会复用</p>
 <p>不仅如此，new出来的对象用 &#x3D;&#x3D; 也是判断为false的，缓存范围内数值和valueOf的才会被 &#x3D;&#x3D; 判断为true</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Integer</span> <span class="variable">i1</span> <span class="operator">=</span> Integer.valueOf(<span class="number">127</span>);</span><br><span class="line"><span class="type">Integer</span> <span class="variable">i2</span> <span class="operator">=</span> <span class="number">127</span>;</span><br><span class="line">System.out.println(i1 == i2);	<span class="comment">// true</span></span><br><span class="line"><span class="comment">/* --------------------------------- */</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">i1</span> <span class="operator">=</span> Integer.valueOf(<span class="number">128</span>);</span><br><span class="line"><span class="type">Integer</span> <span class="variable">i2</span> <span class="operator">=</span> <span class="number">128</span>;</span><br><span class="line">System.out.println(i1 == i2);	<span class="comment">// false</span></span><br><span class="line"><span class="comment">/* --------------------------------- */</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">i1</span> <span class="operator">=</span> <span class="number">127</span>;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">i2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Integer</span>(<span class="number">127</span>);</span><br><span class="line">System.out.println(i1 == i2);	<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
 <p>所以一定要用equals方法判断包装类型的数据</p>
+<p>浮点数精度问题：使用<code>BigDecimal</code>解决</p>
+<h5 id="静态变量-方法"><a href="#静态变量-方法" class="headerlink" title="静态变量&#x2F;方法"></a>静态变量&#x2F;方法</h5><p>static 静态变量，被类的所有实例共享，只会被分配一次内存</p>
+<p>static被final修饰变为常量</p>
+<p>静态的方法不能调用非静态的成员，静态方法是属于类的，非静态成员属于实例对象，对象实例化后才存在</p>
+<p>调用静态方法无需创建对象 &#x3D;&gt; 比如说utils类，如<code>RandomUtil.randInt()</code>，可以直接类名.方法名调用</p>
+<p>而实例方法需要实例来调用，如<code>User user = new User(); user.setEmail(&quot;a@b.com&quot;);</code></p>
+<h5 id="重载-重写"><a href="#重载-重写" class="headerlink" title="重载&amp;重写"></a>重载&amp;重写</h5><p>重载即同一个方法根据不同参数做出不同的处理</p>
+<p>重写则是子类继承父类的相同方法&#x2F;参数，做出不同的处理，打@Override注解，发生在运行期</p>
+<p>不能重写构造方法和父类被 <code>private/final/static</code> 修饰的方法，但是可以重新声明<code>static</code>方法（父类写了一个toString不影响子类也写一个）</p>
+<h5 id="OOP相关"><a href="#OOP相关" class="headerlink" title="OOP相关"></a>OOP相关</h5><p>面向对象方法一类编程思想，其核心是把一类问题抽象出对象，然后调用对象的方法来解决问题</p>
+<p>new的对象实例存在堆内存中，对象的引用存在栈内存中。引用可以看成一个地址名片，知道在哪可以找到想要访问的对象</p>
+<p>对于引用数据：&#x3D;&#x3D; 比较的是内存地址， equals原本就是一个 &#x3D;&#x3D; 判断（，但是<code>String</code>类重写了该方法，改为判断值是否相等）</p>
+<blockquote>
+<p>对于基本数据： &#x3D;&#x3D; 比较的是值，基本数据不属于Object类，没有方法，自然也没有equals方法</p>
+</blockquote>
+<p><strong>封装，继承和多态</strong></p>
+<p>封装即属性私有，但提供公开方法供调用(Getter&#x2F;Setter)</p>
+<p>继承extends，子类拥有父类所有方法，但是子类本质上也是一个新的类，只不过可以沿用或重写父类方法，比较方便且实现了代码复用</p>
+<p>相当于父类作为一个模板，子类可以开箱即用，也可以在其基础上做扩展</p>
+<p>多态：父类的引用指向子类的实例，如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AbstractList&lt;String&gt; strList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">strList = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>ArrayList</code>和<code>LinkedList</code>都继承了<code>AbstractList</code>，父类的引用<code>strList</code>可以指向new出来的子类的实例</p>
+<p>多态的 对象 和 引用 之间可以是继承(类class) 和 实现(接口interface)，多态不能调用子类存在但父类不存在的方法，但是如果调用被重写了的方法，执行的是子类的方法</p>
+<p>接口和抽象类：接口用于管理和约束类的行为，实现一个接口就具有了规定的行为（需要实现接口定义的所有方法），而抽象类主要用于代码复用，你可以继承来一个方法直接用，也可以去重写它</p>
+<p>一个类只能继承一个类，可以实现多个接口：<code>public class A extends B implements C,D,E,F,G...</code></p>
+<h5 id="Object类"><a href="#Object类" class="headerlink" title="Object类"></a>Object类</h5><p>所有类的父类，原生提供了一些方法：<code>getClass</code>, <code>hashCode</code>, <code>equals</code>, <code>clone</code>, <code>toString</code>, <code>notify</code>, <code>notifyAll</code>, <code>wait</code>, <code>finalize</code></p>
+<p>hashCode()：获取Hash码，用于确定对象在哈希表中的索引位置，这样往Map、Set里存对象的效率就更高了</p>
+<blockquote>
+<p>hashCode相等不一定对象就相等，存在哈希碰撞。但是对象相等hashCode一定相等</p>
+<p>因此重写equals方法一定要重写hashCode方法，否则可能导致HashMap里判断2个对象的hashCode不同从而把相同对象存入了不同位置</p>
+</blockquote>
+<h5 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h5><p>String是不可变的，可以当成常量（会存在字符串池里面，引用相同值的字符串会指向同一个地址，除非new了一个String对象）</p>
+<p>String的不可变是通过 <code>(1) private + final修饰它的底层保存变量（Java 8及以下char数组，Java 9及以后byte数组）—— 不可被访问不可被继承</code>，而且 <code>(2) 不提供公共方法修改</code> 来实现的。在Java8及以下的版本中，反射可以破坏这种不可变的特性（毕竟private对反射无效，final又只在编译期生效），高版本也有一些绕过保护的方法</p>
+<h5 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h5><p>Java8及以下在循环中用 + 拼接字符串会创建大量StringBuilder对象，最好使用 <code>StringBuilder</code> 的 <code>append</code> 方法来拼接</p>
+<h5 id="字符串常量池"><a href="#字符串常量池" class="headerlink" title="字符串常量池"></a>字符串常量池</h5><p>JVM为了避免字符串重复创建而开辟的一块区域，如果字符串对象已经在字符池里面了，就直接返回引用，否则创建一个并把引用保存至池子</p>
+<p><code>String s = new String(&quot;str&quot;);</code>会创建 1 或 2 个字符串对象。</p>
+<ol>
+<li><p>若池子里没有字符串对象”str”的引用，则会在堆上创建2个字符串对象，其中一个的引用会被保存在字符串池里</p>
+<p>堆中先创建1个空对象SO1，再创建一个”str”对象SO2并保存引用到常量池，然后给前面创建的对象赋值并返回SO1的引用</p>
+</li>
+<li><p>若池子里有引用，则只会创建一个对象</p>
+</li>
+</ol>
+<h5 id="字符串intern-方法"><a href="#字符串intern-方法" class="headerlink" title="字符串intern()方法"></a>字符串intern()方法</h5><p><code>str.intern()</code> 方法会将指定字符串对象的引用保存到常量池中</p>
+<ol>
+<li>若常量池中保存了对应字符串对象的引用，就返回引用</li>
+<li>若没保存引用，就创建一个引用并返回</li>
+</ol>
+<p>一般用于给String对象上锁，见 <a href="https://lighthouseac.github.io/2024/06/27/Java%E5%B8%B8%E8%A7%81%E8%80%83%E7%82%B9%E5%9D%91%E7%82%B9/">Blog #4</a></p>
+<h5 id="String类型的变量与常量-运算"><a href="#String类型的变量与常量-运算" class="headerlink" title="String类型的变量与常量 + 运算"></a>String类型的变量与常量 + 运算</h5><p>理解了字符池只会保存常量的引用后，这个 + 运算的各种 &#x3D;&#x3D; 判断就简单了</p>
+<p>在编译期，编译器就会把字符串常量给存到字符池里面，而含有变量的则不会，不过用final声明的字符串所在的表达式也会被编译器优化</p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="string">&quot;str&quot;</span> + <span class="string">&quot;ing&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;str&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="string">&quot;ing&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s4</span> <span class="operator">=</span> s2 + s3;</span><br><span class="line">System.out.println(s1 == s4);	<span class="comment">// false，因为s1已经加入常量池了，而s4相当于是new出来的一个StringBuilder创建的对象</span></span><br><span class="line"><span class="type">String</span> <span class="variable">s5</span> <span class="operator">=</span> <span class="string">&quot;string&quot;</span>;</span><br><span class="line">System.out.println(s1 == s5);	<span class="comment">// true，被javac编译器的常量折叠优化了</span></span><br></pre></td></tr></table></figure>
+
+<p>常量折叠只会优化</p>
+<ol>
+<li>基本数据类型&#x2F;字符串 常量</li>
+<li>final修饰的 基本数据类型&#x2F;字符串 变量</li>
+<li>字符串通过 “+” 拼接得到的字符串，基本数据类型的算数和位运算</li>
+</ol>
+<p>简单理解就是，常量折叠是发生在编译期的，如果运行期才能知道具体的值，就不会优化</p>
+<h5 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h5><p>java异常类主要分为 <code>Exception</code> 和 <code>Error</code> 都继承自 <code>Throwable</code> （所有异常的祖先）</p>
+<ul>
+<li>Exception: 程序可以处理的异常，可以被 <code>catch</code> 捕获，分为 <code>Checked Exception</code> 和 <code>Unchecked Exception</code> <ul>
+<li>Checked Exception: 受检查异常，必须处理。如果没被 <code>catch</code> 或 <code>throws</code> 处理则无法通过编译</li>
+<li>Unchecked Exception: 不受检查异常，可不处理 —— Runtime Exception及其子类</li>
+</ul>
+</li>
+<li>Error: 程序不能处理的错误，JVM遇到这类异常一般会选择终止线程</li>
+</ul>
+<h5 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h5><p>泛型可以增强代码的可读性和扩展性（可以兼容很多传递的类型），就是 <code>&lt;T&gt;</code> 这个东东，最常用的比如 <code>List&lt;Integer&gt; aList = new ArrayList&lt;&gt;();</code></p>
+<p>编译器可以对泛型参数进行检测，通过指定泛型参数可以指定传入的对象类型，比如上面的 <code>Integer</code></p>
+<h5 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h5><p>反射算是一个优缺点鲜明的机制，经常听到反射破坏xxx，其实就是因为反射机制的能力太高了，可以获取任意一个类的所有属性和方法</p>
+<p>但是反射用起来非常灵活，比如常见框架的 动态代理、注解等功能 就是通过反射实现的</p>
+<h5 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h5><p>注解用于修饰类、方法或者变量，可以理解成给程序打的带有信息的注释</p>
+<p>注解有编译期直接扫描时生效的，也有运行期通过反射来处理的（如Spring框架里的@Value, @Component等）</p>
+<h5 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h5><p>Service Provider Interface，给服务提供者或扩展框架功能的开发者使用的接口，解耦服务的调用方和服务的提供者，可以提升程序的扩展性、可维护性，修改或替换服务实现不需要修改调用方。框架想要有更多的扩展能力就会使用SPI机制</p>
+<p>SPI和API的区别是，API是提供方提供好了接口和实现，直接调用即可。而SPI是接口存在调用者这边（调用者定义好接口标准），提供者提供不同的实现来提供服务</p>
+<p>比如我实现了一个RPC框架，我可以依赖SPI机制，来实现只需要在META-INF中自定义一个实现，就可以后续调用这个实现</p>
+<p>Java本身提供了一个 <code>ServiceLoader</code> 工具类来加载服务实现，也可以自己写一个 <code>SPILoader</code> 扫描路径并加载实现类</p>
+<p>SPI机制能提高扩展性和灵活性，但是SPI的效率比较低</p>
+<h5 id="序列化-反序列化"><a href="#序列化-反序列化" class="headerlink" title="序列化&#x2F;反序列化"></a>序列化&#x2F;反序列化</h5><p>Serialize序列化，对象&#x3D;&gt;二进制字节流，反序列化相反。</p>
+<p>序列化常见场景：对象通过网络传输（如RPC），对象存储到文件，对象存储到数据库（如Redis），对象存储到内存</p>
+<p>属于TCP&#x2F;IP 4层模型的应用层，属于OSI七层模型的表示层</p>
+<p>不想序列化的变量可以用transient修饰（反序列化后值会变为默认值）。static变量不属于对象，不会被序列化</p>
+<p>JDK序列化器效率低，存在安全问题且不支持跨语言调用，一般不用。用Hessian, Kryo,  Json（为了可读性牺牲效率时用）</p>
+<h5 id="I-O"><a href="#I-O" class="headerlink" title="I&#x2F;O"></a>I&#x2F;O</h5><p>Java IO流：<code>InputStream/OutputStream</code> ，<code>InputStreamReader/OutputStreamReader</code>，字节的输入&#x2F;输出流，字符的输入&#x2F;输出流</p>
+<h4 id="2-Java集合"><a href="#2-Java集合" class="headerlink" title="2) Java集合"></a>2) Java集合</h4><p>Java集合（容器）由 <code>Collection</code> 和 <code>Map</code> 接口派生而来</p>
+<ul>
+<li><p>Collection 接口：</p>
+<p>主要存放单一元素（List, Set, Queue等）</p>
+<ul>
+<li>List<ul>
+<li>ArrayList: Object[] 数组</li>
+<li>Vector: 线程安全但效率较低的Object[] 数组</li>
+<li>LinkedList: 双向链表</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>HashSet：无序集合</li>
+<li>LinkedHashSet：链接的哈希集合，有容量和负载因子</li>
+<li>TreeSet: 有序集合（红黑树，同C++的Set）</li>
+</ul>
+</li>
+<li>Queue<ul>
+<li>PriorityQueue: 优先队列</li>
+<li>Deque: 双端队列</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Map 接口：</p>
+<p>主要存放K&#x2F;V键值对</p>
+<ul>
+<li><p>HashMap: 数组 + 链表实现（链表散列），链表是为了用 “拉链法” 解决哈希冲突。JDK1.8以后当链表长度大于阈值时将链表转化为红黑树减小搜索时间</p>
+<ul>
+<li><p>HashMap的hash方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">hash</span><span class="params">(Object key)</span>&#123;</span><br><span class="line">    <span class="type">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="literal">null</span>) ? <span class="number">0</span> : (h=key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);<span class="comment">//hashCode和自己无符号右移16位的结果异或</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>HashMap数组的每一项都是一个链表，如果产生了哈希冲突，就把冲突的值放进链表里（当链表长度&gt;阈值，且数组大小&gt;64时，JDK1.8以上版本会将链表转变为红黑树）</p>
+</li>
+<li><p>HashMap的长度为什么都是2的幂次</p>
+<p>因为Hash映射的空间特别广，需要把它对数组的长度取模后才能用来当存放的位置（数组下标）</p>
+<p>但是%运算比较慢，性能不好，用到数论里面，p对2的幂次取模 p%x 等价于 p&amp;(x-1)， 可以大大提升效率</p>
+</li>
+</ul>
+</li>
+<li><p>ConcurrentHashMap: 保证线程安全的HashMap</p>
+<ul>
+<li><p>HashMap为什么线程不安全？</p>
+<p>因为多个线程进行put操作产生哈希冲突时时候可能导致数据覆盖</p>
+<p>线程A检查哈希冲突后还没插，如果这时CPU把资源分配给了线程B，线程B检查冲突然后把数值插了进去</p>
+<p>然后线程A继续执行插入，就覆盖了线程B插入的数据</p>
+</li>
+<li><p>ConcurrentHashMap则会对链表的一个节点上锁，保证线程安全的同时提升了并发效率，不会说一个线程put，另一个就不能put了，（对比Hashtable只用一把锁全锁了的方式，ConcurrentHashMap的锁粒度更细）</p>
+</li>
+<li><p>线程安全不意味着保证了复合操作的原子性（数据覆盖还是会产生），要保证原子性，还需要靠ConcurrentHashMap提供的一些原子性操作</p>
+<p>如：<code>map.putIfAbsent(k,v);</code></p>
+</li>
+</ul>
+</li>
+<li><p>LinkedHashMap</p>
+</li>
+<li><p>Hashtable</p>
+</li>
+<li><p>TreeMap: 红黑树</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-Java并发"><a href="#3-Java并发" class="headerlink" title="3) Java并发"></a>3) Java并发</h4><h5 id="Java线程"><a href="#Java线程" class="headerlink" title="Java线程"></a>Java线程</h5><p>线程是比进程更小的执行单位，一个进程执行的过程中可以产生多个线程。线程共享进程的 <strong>堆</strong> 和 <strong>方法区</strong> 资源，但是拥有自己独立的 <strong>程序计数器，虚拟机栈和方法栈</strong> 资源。操作系统切换线程上下文或者创建线程时的开销要小很多。</p>
+<p>Java的线程是基于原生线程实现的，JVM直接调用内核线程来实现Java线程，由操作系统内核来进行线程的调度和管理</p>
+<p>也就是在线程的3种映射模型中，Java使用的是1对1模型</p>
+<blockquote>
+<p>线程模型：分为多对一模型，多对多模型和一对一模型，反映用户线程映射到内核线程的情况</p>
+<p>用户线程：由用户态程序管理和调度的线程，运行在用户态，切换和创建成本低，不能利用CPU的多核</p>
+<p>内核线程：由操作系统内核管理和调度的线程，运行在内核态，切换和创建成本高，但是可以利用CPU的多核</p>
+</blockquote>
 <h2 id="三、计算机网络"><a href="#三、计算机网络" class="headerlink" title="三、计算机网络"></a>三、计算机网络</h2><h2 id="四、操作系统"><a href="#四、操作系统" class="headerlink" title="四、操作系统"></a>四、操作系统</h2><h2 id="五、MySQL"><a href="#五、MySQL" class="headerlink" title="五、MySQL"></a>五、MySQL</h2><h2 id="六、Redis"><a href="#六、Redis" class="headerlink" title="六、Redis"></a>六、Redis</h2><h2 id="七、MQ"><a href="#七、MQ" class="headerlink" title="七、MQ"></a>七、MQ</h2>
 </article>
     
