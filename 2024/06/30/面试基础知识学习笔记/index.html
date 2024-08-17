@@ -15,7 +15,7 @@
 <meta property="og:description" content="基础知识学习笔记（结合实际理解&#x2F;自用）一、设计模式（主要学单例模式，工厂模式Factory，建造者模式Builder，代理模式Proxy）七大原则：    设计原则 定义    开闭原则 对扩展开放，对修改关闭   单一职责原则 一个类只负责一个相应职责   里氏替换原则 所有引用基类的地方必须能透明地使用其子类的对象   依赖倒置原则 依赖于抽象，不能依赖于具体实现   接口隔离原则">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-06-30T13:17:14.000Z">
-<meta property="article:modified_time" content="2024-07-04T09:56:52.892Z">
+<meta property="article:modified_time" content="2024-07-05T14:34:58.245Z">
 <meta property="article:author" content="LightHouse AC">
 <meta name="twitter:card" content="summary">
 
@@ -61,7 +61,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"lighthouseac.github.io","author":"LightHouse AC","root":"/","typed_text":["OIer/ACMer"],"theme_version":"2.1.3","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","showText":"醒来了！","hideText":"睡着啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-07-04 17:56:52"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-07-05 22:34:58"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.3" id="trm-switch-style">
@@ -707,7 +707,303 @@
 <p>用户线程：由用户态程序管理和调度的线程，运行在用户态，切换和创建成本低，不能利用CPU的多核</p>
 <p>内核线程：由操作系统内核管理和调度的线程，运行在内核态，切换和创建成本高，但是可以利用CPU的多核</p>
 </blockquote>
-<h2 id="三、计算机网络"><a href="#三、计算机网络" class="headerlink" title="三、计算机网络"></a>三、计算机网络</h2><h2 id="四、操作系统"><a href="#四、操作系统" class="headerlink" title="四、操作系统"></a>四、操作系统</h2><h2 id="五、MySQL"><a href="#五、MySQL" class="headerlink" title="五、MySQL"></a>五、MySQL</h2><h2 id="六、Redis"><a href="#六、Redis" class="headerlink" title="六、Redis"></a>六、Redis</h2><h2 id="七、MQ"><a href="#七、MQ" class="headerlink" title="七、MQ"></a>七、MQ</h2>
+<ol>
+<li><p>程序计数器、虚拟机栈和方法栈私有</p>
+<ul>
+<li>程序计数器：需要记录线程执行的位置（循环，分支控制等情况），以及多线程被切换回来后才知道从哪继续，所以需要私有</li>
+<li>虚拟机栈和方法栈：Java方法的调用对应栈帧（存放局部变量等信息）在栈中出入，需要私有来保证线程中的局部变量不被别的线程访问</li>
+</ul>
+</li>
+<li><p>堆和方法区</p>
+<p>堆主要存放新创建的对象（几乎所有对象都在堆内分配内存），而方法区主要存放已加载的类信息，常量、静态的变量等</p>
+</li>
+</ol>
+<h5 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h5><p>初始状态（刚创建），可运行状态（正在运行或者等CPU时间片），终止状态（结束执行）和休眠状态（阻塞、等待）</p>
+<h5 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h5><p>线程的切换时，需要保存线程的上下文，然后腾出CPU给其他线程用，下次再占用时恢复现场</p>
+<h5 id="线程的-sleep-和-wait"><a href="#线程的-sleep-和-wait" class="headerlink" title="线程的 sleep 和 wait"></a>线程的 sleep 和 wait</h5><p>sleep方法没有释放锁，wait会释放锁</p>
+<p>wait不设置timeout不会自己苏醒，需要其他线程调用同一个对象上的 <code>notify</code> 或者 <code>notifyAll</code></p>
+<p>所以wait一般用于线程间交互&#x2F;通信，sleep用于暂停执行</p>
+<p>sleep方法属于Thread，wait方法属于Object</p>
+<p>因为sleep是让当前线程暂停执行，不涉及到对象类，也不需要获得对象锁</p>
+<p>而wait是 <strong>用于线程间交互&#x2F;通信的</strong> ：线程只需要知道知道某个对象是否占有锁，<code>wait</code> 会释放锁，把 <code>wait</code> 方法放在Object可以让任何对象拥有实现线程通信机制的能力</p>
+<h5 id="直接调用Thread类的run方法"><a href="#直接调用Thread类的run方法" class="headerlink" title="直接调用Thread类的run方法"></a>直接调用Thread类的run方法</h5><p>new一个Thread对象，线程会进入新建状态。调用start方法，会启动一个线程并使线程进入就绪状态，分配到时间片就会进入运行状态了，start方法会执行线程的相应准备工作，然后自动执行run方法。</p>
+<p>直接执行run方法则会把它当成main线程下一个普通方法执行，而不是在某个线程中执行</p>
+<p>因此调用start会启动线程并使线程进入就绪状态，直接执行run方法不会以多线程的方式执行</p>
+<h5 id="Volatile关键字"><a href="#Volatile关键字" class="headerlink" title="Volatile关键字"></a>Volatile关键字</h5><p>可以保证变量的可见性：告诉JVM，这个变量共享且不稳定，每次使用它都到主存中读取</p>
+<p>可以禁止JVM的指令重排序（应用场景：双检锁实现单例模式）</p>
+<p>不能保证对变量操作的原子性</p>
+<h5 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h5><p>悲观锁假设最坏的情况，认为每次共享的资源被访问都会出问题，所以每次获取资源操作前都会上锁。</p>
+<p>共享资源每次只会给一个线程使用，其他线程会阻塞。如：<code>synchronized</code> 和 <code>ReentrantLock</code> 等</p>
+<p>高并发场景下，激烈的锁竞争会造成大量的线程阻塞，导致频繁的上下文切换，增加很多系统开销</p>
+<p>而乐观锁总是假设最好的情况，认为每次访问都不会出现问题，只有在提交修改的时候取验证是否被其他线程修改了</p>
+<p>一般情况下，悲观锁适用于写比较多的场景，避免乐观锁频繁失败重试影响性能，而乐观锁适用于读比较多的场景，避免频繁上锁影响性能</p>
+<p>乐观锁一般用版本号机制和CAS算法来实现</p>
+<blockquote>
+<p>版本号机制：给数据加上一个版本号字段，表示修改次数，当数据被修改时+1，提交修改时要校验刚刚读取出来时的版本号和库中的是否一致</p>
+</blockquote>
+<h5 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h5><p>synchronized关键字可以修饰 实例方法（锁当前对象实例），静态方法（锁当前Class类）和代码块（锁指定的对象&#x2F;类）</p>
+<p>synchronized 对加锁会获得一个监视器monitor，只有拥有监视器的线程才可以释放锁</p>
+<h5 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h5><p>也是可重入而且独占式的锁，和synchronized类似，但是更灵活，加了一些高级功能</p>
+<blockquote>
+<p>公平锁和非公平锁</p>
+<p>公平锁指的是锁被释放后先申请的线程先得到锁，性能较差；而非公平锁则是随机或者按某种方式给的锁，性能更好，但是可能导致某些线程永远无法获取到锁</p>
+</blockquote>
+<blockquote>
+<p>可重入锁：线程可以再次获取自己的内部锁。线程A获得了一把锁，如果它还没释放，还想继续获取这个锁也是可以的</p>
+</blockquote>
+<p>一般锁和读写锁的区别：</p>
+<ul>
+<li>一般锁：读读互斥、读写互斥、写写互斥</li>
+<li>读写锁：读读不互斥，其他互斥</li>
+</ul>
+<p>共享锁和独占锁</p>
+<ul>
+<li>共享锁可以被多个线程同时获得</li>
+<li>独占锁只能被一个线程获得</li>
+</ul>
+<p>有读锁不能获取写锁，有写锁可以获取读锁：因为获取写锁需要没有占用读锁，而获取读锁时只有发现写锁被别人占了才获取失败</p>
+<p>写锁可以降级成读锁，但是读锁不能升级成写锁</p>
+<p>读锁升级成写锁会引起线程的争夺会影响性能，也可能造成死锁：2个想升级的线程都等着对方释放自己的读锁，然后都不释放</p>
+<h5 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h5><p>一般情况下变量可以被所有线程访问，如果想实现每个线程都有自己专属的本地变量，就需要ThreadLocal</p>
+<p>ThreadLocal就是每个线程都可以有的一个自己的小包，可以往里面塞自己线程的私有数据</p>
+<h5 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h5><p>池化技术的思想就是减少创建和销毁的开销，提高资源利用率</p>
+<p>每当有任务要处理时，从线程池获取线程来处理，处理完后线程回到池子里等下一个任务，而不是销毁</p>
+<p>线程池不仅可以 <strong>降低资源消耗， 提高响应速度（不需要重新创建），还可以提高线程的可管理性</strong></p>
+<h5 id="Future类"><a href="#Future类" class="headerlink" title="Future类"></a>Future类</h5><p>Future类是异步思想的典型运用，主要用于耗时操作</p>
+<p>可以把耗时操作交给 <code>Future</code> 去做，然后去做其他事情，最后再从 <code>Future</code> 那里拿回来执行结果</p>
+<h5 id="CompletableFuture"><a href="#CompletableFuture" class="headerlink" title="CompletableFuture"></a>CompletableFuture</h5><p>CompletableFuture解决了Future类的一些局限性，提供了函数式编程和异步任务编排组合等能力</p>
+<blockquote>
+<p>异步编排组合：将多个异步任务串联起来，组成一个完整的链式调用</p>
+</blockquote>
+<h2 id="三、计算机网络"><a href="#三、计算机网络" class="headerlink" title="三、计算机网络"></a>三、计算机网络</h2><p>OSI七层模型</p>
+<ol>
+<li>应用层			为计算机用户提供服务</li>
+<li>表示层			数据处理（编&#x2F;解码，加&#x2F;解密，压缩&#x2F;解压缩）</li>
+<li>会话层			管理应用程序间的会话</li>
+<li>传输层			为2台主机进程之间的通信提供通用的数据传输服务</li>
+<li>网络层			路由和寻址</li>
+<li>数据链路层		帧编码</li>
+<li>物理层			比特流传输</li>
+</ol>
+<p>TCP&#x2F;IP四层模型：</p>
+<ol>
+<li>应用层</li>
+<li>传输层</li>
+<li>网络层</li>
+<li>网络接口层</li>
+</ol>
+<h5 id="为什么网络要分层"><a href="#为什么网络要分层" class="headerlink" title="为什么网络要分层"></a>为什么网络要分层</h5><p>复杂的系统需要分层，每一层专注地完成自己的事情</p>
+<p>网络分层可以让各层之间相互独立，提高灵活性，大问题化小</p>
+<h5 id="应用层的协议：HTTP-FTP-SSH-TELNET-SMTP-POP3-DNS"><a href="#应用层的协议：HTTP-FTP-SSH-TELNET-SMTP-POP3-DNS" class="headerlink" title="应用层的协议：HTTP&#x2F;FTP&#x2F;SSH&#x2F;TELNET&#x2F;SMTP&#x2F;POP3&#x2F;DNS"></a>应用层的协议：HTTP&#x2F;FTP&#x2F;SSH&#x2F;TELNET&#x2F;SMTP&#x2F;POP3&#x2F;DNS</h5><h5 id="传输层的协议：TCP-UDP"><a href="#传输层的协议：TCP-UDP" class="headerlink" title="传输层的协议：TCP&#x2F;UDP"></a>传输层的协议：TCP&#x2F;UDP</h5><h5 id="网络层的协议：IP-ARP-ICMP-NAT-OSPF-RIP-BGP"><a href="#网络层的协议：IP-ARP-ICMP-NAT-OSPF-RIP-BGP" class="headerlink" title="网络层的协议：IP&#x2F;ARP&#x2F;ICMP&#x2F;NAT&#x2F;OSPF&#x2F;RIP&#x2F;BGP"></a>网络层的协议：IP&#x2F;ARP&#x2F;ICMP&#x2F;NAT&#x2F;OSPF&#x2F;RIP&#x2F;BGP</h5><h5 id="经典输入URL到页面展示全流程"><a href="#经典输入URL到页面展示全流程" class="headerlink" title="经典输入URL到页面展示全流程"></a>经典输入URL到页面展示全流程</h5><ol>
+<li>浏览器检查DNS缓存，发现没有就去DNS服务器获取，得到URL对应的IP地址和端口号</li>
+<li>路由器向web服务器发送一个TCP连接请求，完成三次握手后，建立起请求</li>
+<li>浏览器通过TCP连接向服务器发送获取页面的HTTP请求报文</li>
+<li>服务器收到请求后处理，返回HTTP响应报文</li>
+<li>浏览器收到响应后解析响应体的HTML代码，如果发现代码中还有其他要请求的资源，则继续发送请求获取资源直到页面加载显示完成</li>
+<li>完成后浏览器可以主动关闭TCP连接或者等待服务器关闭</li>
+</ol>
+<h5 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h5><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>类别</th>
+<th>代表信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1xx</td>
+<td>信息性状态码</td>
+<td>接收的请求正在处理</td>
+</tr>
+<tr>
+<td>2xx</td>
+<td>成功状态码</td>
+<td>请求正常处理完毕</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td>重定向状态码</td>
+<td>需要进行附加操作完成请求</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td>客户端错误状态码</td>
+<td>服务器无法处理请求</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td>服务端错误状态码</td>
+<td>服务器处理请求出错</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>常见状态码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200 OK</td>
+<td>请求被成功处理</td>
+</tr>
+<tr>
+<td>201 Created</td>
+<td>请求被成功处理并在服务端创建了一个新的资源</td>
+</tr>
+<tr>
+<td>202 Accepted</td>
+<td>服务端接收到了请求，但是还没有处理</td>
+</tr>
+<tr>
+<td>204 No Content</td>
+<td>服务端成功处理了请求，但是没有返回内容（用于只关注请求是否被成功处理）</td>
+</tr>
+<tr>
+<td>301 Moved Permanently</td>
+<td>资源被永久重定向了</td>
+</tr>
+<tr>
+<td>302 Found</td>
+<td>资源被临时重定向了</td>
+</tr>
+<tr>
+<td>400 Bad Request</td>
+<td>请求错误（可能是参数或者方法）</td>
+</tr>
+<tr>
+<td>401 Unauthorized</td>
+<td>未认证</td>
+</tr>
+<tr>
+<td>403 Forbidden</td>
+<td>直接拒绝不处理（用于非法请求）</td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>请求的资源在服务端不存在</td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>服务端出问题了（bug或其他原因）</td>
+</tr>
+<tr>
+<td>502 Bad Gateway</td>
+<td>网关将请求转发到服务端，但是返回了错误的响应</td>
+</tr>
+</tbody></table>
+<h4 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h4><p>保密性好，信任度高</p>
+<p>核心——TLS协议</p>
+<h5 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h5><ol>
+<li>客户端发请求建立连接</li>
+<li>服务器把数字证书和加密算法发回给客户端</li>
+<li>客户端验证证书合法后，1) 产生一个随机密钥，2) 计算握手信息的摘要 3) 用密钥将摘要加密 4) 用证书里的公钥加密密钥。然后把加密后的握手信息和密钥发给服务器</li>
+<li>服务器收到加密后的密钥后用自己的私钥解密，得到先前产生的随机密钥，用改密钥对摘要解密，再自己加密摘要做比对，如果一致就握手成功，后面的通信数据都用这个随机密钥来加密</li>
+</ol>
+<p>核心就是保证这个随机产生的密钥安全地到达服务器手里，同时客户端也可以信任它的通信对象是服务器</p>
+<h5 id="HTTP1-0-vs-HTTP1-1"><a href="#HTTP1-0-vs-HTTP1-1" class="headerlink" title="HTTP1.0 vs HTTP1.1"></a>HTTP1.0 vs HTTP1.1</h5><ol>
+<li>1.1 新添加了很多状态码</li>
+<li>1.1默认改用长连接（一次TCP连接可以反复发HTTP请求）</li>
+<li>1.1添加的host字段可以让服务端确定客户端真正想要请求的网址</li>
+<li>1.1新增的100状态码可以用来询问服务器是否愿意响应某些请求</li>
+<li>1.1引入了 <code>cache-control</code> 来控制缓存</li>
+</ol>
+<h5 id="HTTP1-1-vs-HTTP2-0"><a href="#HTTP1-1-vs-HTTP2-0" class="headerlink" title="HTTP1.1 vs HTTP2.0"></a>HTTP1.1 vs HTTP2.0</h5><ol>
+<li>2.0引入了多路复用：在同一个连接上可以同时传输多个请求和响应，互不干扰（1.1是串行方式，每个请求和响应都需要独立的连接）【长连接是可以反复发，多路复用是可以反复发 + 可以发多个】</li>
+<li>2.0使用二进制帧进行数据传输，1.1则是文本格式的报文</li>
+<li>头部压缩：1.1支持body压缩，不支持header压缩。而2.0支持了header的压缩</li>
+<li>服务器推送：2.0支持服务器推送，客户端请求一个资源时，把其他资源一并推送给客户端，减少客户端的请求次数和延迟</li>
+</ol>
+<h5 id="HTTP2-0-vs-HTTP3-0"><a href="#HTTP2-0-vs-HTTP3-0" class="headerlink" title="HTTP2.0 vs HTTP3.0"></a>HTTP2.0 vs HTTP3.0</h5><ol>
+<li><p>传输协议：HTTP2.0及以前是基于TCP协议实现的，HTTP3.0则是基于UDP升级的QUIC协议。</p>
+<p>QUIC协议： （使用了TLS1.3的特性，支持1个RTT的握手和0个RTT的握手），连接建立仅需0或者1个RTT的额外时间</p>
+</li>
+<li><p>HTTP3.0一定程度上解决了队头阻塞的问题</p>
+<blockquote>
+<p>队头阻塞：由于多路复用，多个请求使用1个TCP连接，一旦发生丢包就会阻塞住所有的HTTP请求</p>
+</blockquote>
+<p>HTTP3.0在一个连接建立了多个不同的数据流，这些数据流之间独立且互不影响</p>
+</li>
+<li><p>HTTP3.0有更好的错误恢复机制。2.0的依赖于TCP的错误恢复机制</p>
+</li>
+<li><p>HTTP2.0使用TLS协议加密，HTTP3.0基于的QUIC协议包含内置的加密和身份验证机制（TLS1.3）</p>
+</li>
+</ol>
+<h5 id="URI-URL"><a href="#URI-URL" class="headerlink" title="URI &amp; URL"></a>URI &amp; URL</h5><p>URI是标识符，URL是定位符，是一种具体的URI（不仅标识唯一资源，还提供定位该资源的信息）</p>
+<h2 id="四、操作系统"><a href="#四、操作系统" class="headerlink" title="四、操作系统"></a>四、操作系统</h2><h2 id="五、MySQL"><a href="#五、MySQL" class="headerlink" title="五、MySQL"></a>五、MySQL</h2><h5 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h5><h5 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h5><p>事务的特性：ACID，原子性，一致性，隔离性，持久性</p>
+<p>原子性通过undo log保证，隔离性通过MVCC和锁机制保证，持久性通过redo log保证</p>
+<p>一致性通过原子性，隔离性和持久性保证</p>
+<h5 id="并行事务导致的问题"><a href="#并行事务导致的问题" class="headerlink" title="并行事务导致的问题"></a>并行事务导致的问题</h5><ol>
+<li><p>脏读</p>
+<p>一个事务读到了另一个未提交事务修改过的数据</p>
+<p>事务A读到了事务B改的数据，但是事务B回滚了，这时候A就读到了过期数据</p>
+</li>
+<li><p>不可重复读</p>
+<p>一个事务内多次读取同一个数据，前后读到的数据不一致</p>
+<p>事务A读一次，然后事务B提交了一次修改，事务A又读了一次</p>
+</li>
+<li><p>幻读</p>
+<p>幻读主要是前后查询的记录数量不一致</p>
+</li>
+</ol>
+<h5 id="解决这些问题的4种隔离级别"><a href="#解决这些问题的4种隔离级别" class="headerlink" title="解决这些问题的4种隔离级别"></a>解决这些问题的4种隔离级别</h5><ol>
+<li><p>读未提交 （啥也解决不了）</p>
+<p>一个事务未提交时，变更就可以被其他事务看到</p>
+</li>
+<li><p>读提交 （解决脏读）</p>
+<p>一个事务提交了，变更才可以被其他事务看到</p>
+<p><strong>每个select都会生成新的Read View</strong></p>
+</li>
+<li><p>可重复读 （解决不可重复读）</p>
+<p>一个事务执行中看到的数据保证和开始时一致（InnoDB 默认的隔离级别）</p>
+<p><strong>事务创建的时候生成一个Read View，整个事务期间都用这个Read View</strong></p>
+</li>
+<li><p>串行化 （解决幻读）</p>
+<p>对记录加上读写锁，多个事务对同一记录操作发生读写冲突时，必须等待其他事务执行完成</p>
+</li>
+</ol>
+<p>不建议升级到串行化，效率太低</p>
+<p>InnoDB的可重复读级别避免了很多幻读情况</p>
+<ol>
+<li><p>针对快照读（普通读），用MVCC解决幻读</p>
+</li>
+<li><p>针对当前读（select … for update），用next-key lock（记录锁 + 间隙锁）解决幻读</p>
+<blockquote>
+<p>记录锁：锁一条记录</p>
+<p>间隙锁：锁一个范围，除了记录本身；如：(3, 5)</p>
+<p>next-key lock（临键锁）：记录锁 + 间隙锁，锁一个范围，包括记录本身；如：(3, 5]</p>
+</blockquote>
+</li>
+</ol>
+<h5 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h5><p>InnoDB对MVCC的实现依赖：隐藏字段、Read View和undo log</p>
+<p>通过隐藏字段和Read View来判断数据的可见性，如果不可见，则找到undo log中的历史版本</p>
+<p>每个事务读到的数据版本可能不一样。同一个事务中，只能看到该事务创建Read View之前已经提交的和该事务自己创建的修改</p>
+<h5 id="MySQL里的锁"><a href="#MySQL里的锁" class="headerlink" title="MySQL里的锁"></a>MySQL里的锁</h5><ol>
+<li><p>全局锁</p>
+</li>
+<li><p>表级锁</p>
+<ol>
+<li><p>表锁</p>
+</li>
+<li><p>元数据锁</p>
+</li>
+<li><p>意向锁</p>
+<ul>
+<li>对某些记录加共享锁前，需要先在表级别加意向共享锁</li>
+<li>对某些记录加独占锁前，需要先在表级别加意向独占锁</li>
+</ul>
+<p>意向锁的目的是快速判断表里是否有记录被加锁</p>
+</li>
+<li><p>AUTO-INC 锁</p>
+</li>
+</ol>
+</li>
+<li><p>行级锁</p>
+<p>S锁（共享锁，读锁）和X锁（独占锁，写锁）</p>
+<p>S锁读读共享，读写互斥；X锁写写互斥，读写互斥</p>
+</li>
+</ol>
+<h2 id="六、Redis"><a href="#六、Redis" class="headerlink" title="六、Redis"></a>六、Redis</h2><h2 id="七、MQ"><a href="#七、MQ" class="headerlink" title="七、MQ"></a>七、MQ</h2>
 </article>
     
     
@@ -721,6 +1017,37 @@
             <span data-number="02"></span>
         </h5>
     </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/08/17/maven%E5%88%9B%E5%BB%BAarchetype%E5%8D%A1%E4%BD%8F/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E7%AC%94%E8%AE%B0/">
+                    笔记
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/08/17/maven%E5%88%9B%E5%BB%BAarchetype%E5%8D%A1%E4%BD%8F/" class="trm-anima-link">
+                    Maven创建archetype卡住
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/08/17</li>
+                <li>17:17</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
     
     
         <div class="col-lg-6">
